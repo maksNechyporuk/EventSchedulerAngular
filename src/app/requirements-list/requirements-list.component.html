@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col">
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let requirement of requirements; let i = index"
+        (click)="onEdit(i)"
+      >
+        {{ requirement.title }}: {{ requirement.description }}
+      </li>
+    </ul>
+    <div></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <app-requirements-edit></app-requirements-edit>
+  </div>
+</div>
