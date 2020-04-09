@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EventService } from '../event.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Event } from '../event-list/event.model';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -20,7 +20,8 @@ export class EventEditComponent implements OnInit {
   src: string;
   constructor(
     private eventService: EventService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   onAdd() {
     this.eventService.onSendRequirements(this.item.requirements);
@@ -60,6 +61,7 @@ export class EventEditComponent implements OnInit {
     } else {
       this.eventService.onAddEvent(newEvent);
     }
+    this.router.navigate(['events']);
   }
   onReset() {
     this.editMode = false;

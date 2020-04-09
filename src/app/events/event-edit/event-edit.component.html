@@ -78,6 +78,13 @@
 </form>
 <div class="row">
   <div class="col">
-    <img src="{{ src }}" alt="Image" />
+    <img src="https://img.icons8.com/plasticine/2x/camera.png" *ngIf="!src" />
+    <img
+      src="{{ src }}"
+      alt="Image"
+      *ngIf="src"
+      onerror="this.src=`https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Error.svg/100px-Error.svg.png`; "
+      default=""
+    />
   </div>
 </div>
