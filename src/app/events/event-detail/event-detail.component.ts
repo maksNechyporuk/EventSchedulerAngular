@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../event-list/event.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage.service';
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.component.html',
@@ -13,13 +14,14 @@ export class EventDetailComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private storageService: StorageService
   ) {}
   onAdd() {
     this.eventService.onSendRequirements(this.item.requirements);
   }
   onDelete() {
-    this.eventService.deleteItem(this.index);
+    this.storageService.deleteItem(this.index);
     this.router.navigate(['events']);
   }
   ngOnInit(): void {

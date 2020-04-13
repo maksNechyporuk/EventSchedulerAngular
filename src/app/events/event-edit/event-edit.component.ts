@@ -5,6 +5,7 @@ import { Event } from '../event-list/event.model';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Requirement } from 'src/app/requirements-list/requirements.model';
+import { StorageService } from 'src/app/services/storage.service';
 @Component({
   selector: 'app-event-edit',
   templateUrl: './event-edit.component.html',
@@ -21,7 +22,8 @@ export class EventEditComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private storageService: StorageService
   ) {}
   onAdd() {
     this.eventService.onSendRequirements(this.item.requirements);
@@ -37,7 +39,6 @@ export class EventEditComponent implements OnInit {
       (index: number) => {
         this.editMode = true;
         this.index = index;
-        console.log('subscription');
         this.EventForm.setValue({
           title: this.item.name,
           description: this.item.description,
@@ -57,9 +58,9 @@ export class EventEditComponent implements OnInit {
     ]);
     console.log(form.value);
     if (this.editMode) {
-      this.eventService.updateEvents(this.index, newEvent);
+      this.storageService.updateEvents(this.index, newEvent);
     } else {
-      this.eventService.onAddEvent(newEvent);
+      this.storageService.onAddEvent(newEvent);
     }
     this.router.navigate(['events']);
   }

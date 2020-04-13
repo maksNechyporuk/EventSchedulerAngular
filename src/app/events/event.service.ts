@@ -3,13 +3,19 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Requirement } from '../requirements-list/requirements.model';
 import { RequirementService } from '../requirements-list/requirement.service';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class EventService {
   startEdit = new Subject<number>();
   eventUpdate = new EventEmitter<Event[]>();
   eventSelected = new EventEmitter<Event>();
-  constructor(private requirementService: RequirementService) {}
-  private events: Event[] = [
+  private URL = 'https://event-c67f7.firebaseio.com/events.json';
+
+  constructor(
+    private requirementService: RequirementService,
+    private http: HttpClient
+  ) {}
+  private events: Event[]; /* = [
     new Event(
       'Java Script Patterns',
       'For advanced skill students',
@@ -23,14 +29,17 @@ export class EventService {
 
       [new Requirement('Java', 'Java Spring')]
     ),
-  ];
-
+  ]; */
+  onAddEvents(events: Event[]) {
+    this.events = events;
+    this.eventUpdate.emit(this.events.slice());
+  }
   deleteItem(index: number) {
     this.events.splice(index, 1);
     this.eventUpdate.emit(this.events.slice());
   }
   getEvents() {
-    return this.events.slice();
+    if (this.events) return this.events.slice();
   }
   getSingleEvent(index: number) {
     return this.events[index];
